@@ -88,7 +88,14 @@ class agglomerative:
                 distance = cosine_distances(mean_clusters)[0][1]
         return distance
     
+    def get_clusters(self):
+        return self.__memory
+    
     def fit_predict(self, data):
+        self.__pointer_data = []
+        self.__clusters = []
+        self.__memory = []
+        self.__distance_matrix = []
         self.__pointer_data = data
         self.preparation()
         self.clustering()
