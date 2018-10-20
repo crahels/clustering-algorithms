@@ -8,10 +8,10 @@ iris = load_iris()
 X = iris.data
 y = iris.target
 
-my_model = DBSCAN(eps=0.4, min_points=3)
+my_model = DBSCAN(eps=0.4, min_points=3, metric='euclidean')
 my_labels = my_model.fit_predict(X, y)
 
-sklearn_model = sklearn.cluster.DBSCAN(eps=0.4, min_samples=3)
+sklearn_model = sklearn.cluster.DBSCAN(eps=0.4, min_samples=3, metric='euclidean')
 sklearn_labels = sklearn_model.fit_predict(X, y)
 
 print('Comparing with Scikit-Learn...')
