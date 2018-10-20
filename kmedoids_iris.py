@@ -3,7 +3,7 @@ from sklearn.metrics.cluster import adjusted_rand_score, fowlkes_mallows_score, 
 from sklearn.metrics.cluster import contingency_matrix
 import numpy as np
 from sklearn import datasets
-from agglomerative import agglomerative
+from kmedoids import kmedoids
 
 result_score = {}
 
@@ -29,7 +29,9 @@ iris = datasets.load_iris()
 iris_data = iris.data
 iris_target = iris.target
 
-model = agglomerative(metric='manhattan', linkage='complete', n_clusters=3)
-predict = model.fit_predict(iris_data)
+kmedoids_model = kmedoids(iris_data, n_clusters=3)
+kmedoids_model.clustering()
+predict = kmedoids_model.get_cluster()
+print('Medoids: ', kmedoids_model.get_medoids())
 print('Labels prediction: ', predict)
-score(algo_name='Agglomerative', data=iris_data, target=iris_target, result=predict)
+score(algo_name='Kmedoids', data=iris_data, target=iris_target, result=predict)
