@@ -15,10 +15,13 @@ sklearn_model = sklearn.cluster.DBSCAN(eps=0.4, min_samples=3)
 sklearn_labels = sklearn_model.fit_predict(X, y)
 
 print('Comparing with Scikit-Learn...')
+mismatch_count = 0
 for i in range(len(sklearn_labels)):
 	if my_labels[i] != sklearn_labels[i]:
 		print('Mismatch! My Labels: ' + str(my_labels[i]) + ' Sklearn Labels: ' + str(sklearn_labels[i]))
-print('All Labels Match!')
+		mismatch_count += 1
+if mismatch_count == 0:
+	print('All Labels Match!')
 
 print('Actual Labels:')
 print(y)
