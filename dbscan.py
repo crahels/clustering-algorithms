@@ -1,11 +1,20 @@
 import numpy as np
-from scipy.spatial.distance import euclidean
+from scipy.spatial import distance
 
 class DBSCAN:
 
-	def __init__(self, eps=0.5, min_points=5):
+	def __init__(self, eps=0.5, min_points=5, metric='euclidean'):
 		self.eps = eps
 		self.min_points = min_points
+		self.distance = self.get_distance_function(metric)
+
+	def get_distance_function(self, metric):
+		distance_function_switcher = {
+			'euclidean': distance.euclidean,
+			'manhattan': distance.cityblock,
+			'cosine': distance.cosine
+		}
+		return distance_function_switcher.get(metric)
 
 	def fit_predict(self, X, y=None):
 		self.labels = np.full(len(X), -2)
@@ -38,6 +47,6 @@ class DBSCAN:
 	def region_query(self, X, p):
 		neighbor_points = []
 		for q in range(len(X)):
-			if euclidean(X[p], X[q]) < self.eps:
+			if self.distance(X[p], X[q]) < self.eps:
 				neighbor_points.append(q)
 		return neighbor_points
